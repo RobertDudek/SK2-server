@@ -1,0 +1,93 @@
+Protocol:
+
+First we send the length of the message, then the message.
+
+Message is constructed as: 2 letter command + rest, depending on the command,
+tokens in message are differentiated by a delimiter, ;; by default.
+
+Template:
+Where message is sent:
+	2 letter command:
+		//Explanation of the command
+		//How the rest of the message looks like (delimiter instead of ;; if not default)
+
+
+To Server:
+	nq:
+		//New Quiz command
+		//QuizName;;Question;;Asnwer1;;Answer2;;Answer3;;Answer4;;CorrectAnswer(1,2,3 or 4);;Question...
+	gg:
+		//Get Games command - returns Send Games
+		//
+	gq:
+		//Get Quizes command - returns Send Quizes 
+		//
+	ng:
+		//New Game command
+		//QuizName
+	jg:
+		//Join Game command
+		//GameID
+	lg:
+		//Leave Game command
+		//GameID
+	gp:
+		//Get Players - returns Game Info(gi)
+		//GameID
+	sg:
+		//Start Game command
+		//GameID
+	na:
+		//New Answer
+		//GameID;;ChosenAswer(1,2,3 or 4)
+
+To Client:
+	gi:
+		//Game Info command - also confirms join
+        //GameID;;Player1Nick;;Player2Nick...
+//    dg:
+//    	//Destroy Game command - send when the game is started, or there is no //        more players in a game lobby
+    	//GameID
+    sg:
+		//Send Games command
+		//GameID;;numberOfPLayers;;GameID;;number...
+	sq:
+		//Send Quizes command
+		//QuizName;;Question;;Asnwer1;;Answer2;;Answer3;;Answer4;;CorrectAnswer(1,2,3 or 4);;Question...
+	cq:
+		//Current Question
+		//GameID;;Question;;Answer1;;Answer2;;Answer3;;Answer4
+	sr:
+		//Send Results
+		//GameID;;PlayerName;;PlayerResult;;PlayerName...
+	eq:
+		//End Quiz
+		//GameID
+   	er:
+   		//ERror command - client could be too late to join/start game or meet another unexpected error, inform him about it
+   		//error text message
+
+script for nc
+
+0005nick
+0007Robert
+
+0035nqName;;Pytanie?;;a;;be;;ce;;de;;1
+0036nqName2;;Pytanie2?;;a;;b;;ce;;de;;2
+0044nqNa;;A?;;a;;b;;c;;d;;1;;B?;;a;;be;;c;;d;;2
+0082Na;;A?;;a;;b;;c;;d;;1;;B?;;a;;be;;c;;d;;2;;C?;;a;;b;;ce;;d;;3;;D?;;a;;b;;c;;de;;4
+
+
+0003gq
+
+
+
+0007ngName
+0005ngNa
+
+
+0004sg1
+
+
+
+0007na1;;1
